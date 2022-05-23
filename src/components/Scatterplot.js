@@ -1,8 +1,11 @@
-import { useEffect } from "react";
+import { useEffect, useContext } from "react";
 import axios from "axios";
 import * as d3 from "d3";
+import { ApiContext } from "../App";
 
-function Scatterplot({ data, setData, svgRef, date, api_key }) {
+function Scatterplot({ data, setData, svgRef, date, setIsLoading, ...rest }) {
+  const { api_key } = useContext(ApiContext);
+
   function parseId(id) {
     const text = id;
     return text
@@ -10,6 +13,16 @@ function Scatterplot({ data, setData, svgRef, date, api_key }) {
       .replace(")", "")
       .replace(/([0-9])/g, "")
       .trim();
+  }
+
+  function limitDiameter(diameter) {
+    if (diameter <= 7) {
+      return 7;
+    }
+    if (diameter >= 50) {
+      return 50;
+    }
+    return diameter;
   }
 
   useEffect(() => {
@@ -128,8 +141,9 @@ function Scatterplot({ data, setData, svgRef, date, api_key }) {
             .text("VELOCITY (km/s)");
         }
         //scale
-        const xScale = d3.scaleLinear().domain([0, 40]).range([0, w]);
+        const xScale = d3.scaleLinear().domain([0, 60]).range([0, w]);
         const yScale = d3.scaleLinear().domain([0, 50]).range([h, 0]);
+
         const defs = svg.append("defs");
         const radialGradient = defs
           .append("radialGradient")
@@ -158,8 +172,8 @@ function Scatterplot({ data, setData, svgRef, date, api_key }) {
         Tooltip.append("rect")
           .attr("width", 183)
           .attr("height", 140)
-          .attr("x", (d) => xScale(d[1]) + 10)
-          .attr("y", (d) => yScale(d[2]) + 5)
+          .attr("x", (d) => xScale(d[2]) + 10)
+          .attr("y", (d) => yScale(d[1]) + 5)
           .attr("fill", "rgba(17, 54, 71, 0.4)")
           .attr("background-opacity", "0.4")
           .attr("stroke-width", "1")
@@ -167,8 +181,8 @@ function Scatterplot({ data, setData, svgRef, date, api_key }) {
           .attr("opacity", "0");
 
         Tooltip.append("text")
-          .attr("x", (d) => xScale(d[1]) + 40)
-          .attr("y", (d) => yScale(d[2]) + 40)
+          .attr("x", (d) => xScale(d[2]) + 40)
+          .attr("y", (d) => yScale(d[1]) + 40)
           .attr("font-size", "13")
           .attr("font-family", "Avenir")
           .attr("font-weight", "300")
@@ -177,18 +191,18 @@ function Scatterplot({ data, setData, svgRef, date, api_key }) {
           .text((d) => `Name: ${d[3]}`);
 
         Tooltip.append("text")
-          .attr("x", (d) => xScale(d[1]) + 40)
-          .attr("y", (d) => yScale(d[2]) + 60)
+          .attr("x", (d) => xScale(d[2]) + 40)
+          .attr("y", (d) => yScale(d[1]) + 60)
           .attr("font-size", "13")
           .attr("font-family", "Avenir")
           .attr("font-weight", "300")
           .attr("fill", "white")
           .attr("opacity", "0")
-          .text((d) => `Diameter: ${d[1] / 200} km`);
+          .text((d) => `Diameter: ${(d[0] / 100).toFixed(5)} km`);
 
         Tooltip.append("text")
-          .attr("x", (d) => xScale(d[1]) + 40)
-          .attr("y", (d) => yScale(d[2]) + 80)
+          .attr("x", (d) => xScale(d[2]) + 40)
+          .attr("y", (d) => yScale(d[1]) + 80)
           .attr("font-size", "13")
           .attr("font-family", "Avenir")
           .attr("font-weight", "300")
@@ -197,18 +211,18 @@ function Scatterplot({ data, setData, svgRef, date, api_key }) {
           .text((d) => `Magnitude: ${d[4]} h`);
 
         Tooltip.append("text")
-          .attr("x", (d) => xScale(d[1]) + 40)
-          .attr("y", (d) => yScale(d[2]) + 100)
+          .attr("x", (d) => xScale(d[2]) + 40)
+          .attr("y", (d) => yScale(d[1]) + 100)
           .attr("font-size", "13")
           .attr("font-family", "Avenir")
           .attr("font-weight", "300")
           .attr("fill", "white")
           .attr("opacity", "0")
-          .text((d) => `Distance: ${d[4]} au`);
+          .text((d) => `Distance: ${(d[1] / 100).toFixed(5)} au`);
 
         Tooltip.append("text")
-          .attr("x", (d) => xScale(d[1]) + 40)
-          .attr("y", (d) => yScale(d[2]) + 120)
+          .attr("x", (d) => xScale(d[2]) + 40)
+          .attr("y", (d) => yScale(d[1]) + 120)
           .attr("font-size", "13")
           .attr("font-family", "Avenir")
           .attr("font-weight", "300")
@@ -222,20 +236,20 @@ function Scatterplot({ data, setData, svgRef, date, api_key }) {
           .enter()
           .append("circle")
           .attr("id", (d) => d[3])
-          .attr("cx", (d) => xScale(d[1]))
-          .attr("cy", (d) => yScale(d[2]))
+          .attr("cx", (d) => xScale(d[2]))
+          .attr("cy", (d) => yScale(d[1]))
           .on("mouseover", (d, i) => {
             svg
               .select(`#${parseId(i[3])}`)
               .select("rect")
               .transition()
-              .duration(500)
+              .duration(300)
               .attr("opacity", "1");
             svg
               .select(`#${parseId(i[3])}`)
               .selectAll("text")
               .transition()
-              .duration(500)
+              .duration(300)
               .attr("opacity", "1");
           })
           .on("mouseout", (d, i) => {
@@ -243,18 +257,18 @@ function Scatterplot({ data, setData, svgRef, date, api_key }) {
               .select(`#${parseId(i[3])}`)
               .select("rect")
               .transition()
-              .duration(500)
+              .duration(300)
               .attr("opacity", "0");
             svg
               .select(`#${parseId(i[3])}`)
               .selectAll("text")
               .transition()
-              .duration(500)
+              .duration(300)
               .attr("opacity", "0");
           })
           .transition()
           .duration(700)
-          .attr("r", (d) => d[0])
+          .attr("r", (d) => limitDiameter(d[0]))
           .attr("fill", "url(#radialGradient)")
           .style("fill-opacity", "0.2")
           .style("stroke-width", 1)
@@ -265,8 +279,8 @@ function Scatterplot({ data, setData, svgRef, date, api_key }) {
           .data(data)
           .enter()
           .append("circle")
-          .attr("cx", (d) => xScale(d[1]))
-          .attr("cy", (d) => yScale(d[2]))
+          .attr("cx", (d) => xScale(d[2]))
+          .attr("cy", (d) => yScale(d[1]))
           .attr("r", 1)
           .attr("fill", "#2AF598");
       }
@@ -277,6 +291,7 @@ function Scatterplot({ data, setData, svgRef, date, api_key }) {
 
   useEffect(() => {
     setData([]);
+    setIsLoading(true);
     axios
       .get("https://api.nasa.gov/neo/rest/v1/feed", {
         params: {
@@ -302,11 +317,10 @@ function Scatterplot({ data, setData, svgRef, date, api_key }) {
                 i
               ].estimated_diameter.kilometers.estimated_diameter_max) /
               2) *
-            200;
-          const velocity = parseInt(
+            100;
+          const velocity =
             res.data.near_earth_objects[date.toISOString().substring(0, 10)][i]
-              .close_approach_data[0].relative_velocity.kilometers_per_second
-          );
+              .close_approach_data[0].relative_velocity.kilometers_per_second;
           const distance =
             res.data.near_earth_objects[date.toISOString().substring(0, 10)][i]
               .close_approach_data[0].miss_distance.astronomical * 100;
@@ -323,6 +337,7 @@ function Scatterplot({ data, setData, svgRef, date, api_key }) {
               .length -
               1
           ) {
+            setIsLoading(false);
             return setData(arrayTemp);
           }
         }
@@ -332,7 +347,7 @@ function Scatterplot({ data, setData, svgRef, date, api_key }) {
 
   return (
     <div id="Scatterplot" className="w-[1000px] h-[400px]">
-      <svg ref={svgRef}></svg>
+      <svg ref={svgRef} {...rest}></svg>
     </div>
   );
 }

@@ -1,5 +1,5 @@
-import Button from "./components/Button";
-import { removeButtonFocus, buttonFocus } from "./stylingFunctions/functions";
+import Button from "./Button";
+import { removeButtonFocus, buttonFocus } from "../stylingFunctions/functions";
 
 function ButtonHeader({ days, date, buttonRef, setDate }) {
   const parsedDate = date.toString().substring(0, 3).toLowerCase();
