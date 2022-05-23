@@ -5,7 +5,7 @@ import App from "./App";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 
-const api_key = "vTpZ6QOhXdgDp2FXRmsd2phf4Y3MGMaKZ7QCT2p1";
+const api_key = " ";
 
 root.render(
   <React.StrictMode>

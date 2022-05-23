@@ -2,7 +2,7 @@
 
 ## features
 
-KEEP IN MIND THIS PROGRAM WORKS ONLY FOR DESKTOP USER (no responsive design).
+KEEP IN MIND THIS PROGRAMME WORKS ONLY FOR DESKTOP USER (no responsive design).
 
 There are mainly two parts:
 
@@ -11,7 +11,7 @@ There are mainly two parts:
 
 ## Instructions
 
-- navigate to [NASA](https://api.nasa.gov/) SITE, sign up to get the api key
+- navigate to [NASA](https://api.nasa.gov/) site, sign up to get the api key
 - Open the folder with your code editor
 - open the terminal and run `npm i`
 - navigate to `./src/index.js` at line 8 and insert you api_key between " ".
