@@ -7,6 +7,6 @@ const root = ReactDOM.createRoot(document.getElementById("root"));
 
 root.render(
   <React.StrictMode>
-    <App api_key={process.env.REACT_APP_NASA_API_KEY} />
+    <App api_key={" "} />
   </React.StrictMode>
 );
