@@ -346,7 +346,7 @@ function Scatterplot({ data, setData, svgRef, date, setIsLoading, ...rest }) {
   }, [date]);
 
   return (
-    <div id="Scatterplot" className="w-[1000px] h-[400px]">
+    <div id="Scatterplot" className="w-[1000px] h-[400px] flex items-center">
       <svg ref={svgRef} {...rest}></svg>
     </div>
   );

@@ -14,7 +14,7 @@ There are mainly two parts:
 - navigate to [NASA](https://api.nasa.gov/) site, sign up to get the api key
 - Open the folder with your code editor
 - open the terminal and run `npm i`
-- navigate to `./src/index.js` at line 8 and insert you api_key between " ".
+- navigate to `./env` in the root folder AND insert you api_key after REACT_APP_NASA_API_KEY variable.
 - open the terminal and run `npm run start`
 
 ## License
