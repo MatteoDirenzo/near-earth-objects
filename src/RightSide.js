@@ -3,6 +3,7 @@ import Arealegend from "./components/AreaLegend";
 import { ApiContext } from "./App";
 import axios from "axios";
 import ListItem from "./components/ListItem";
+import Loader from "./Loader";
 
 export default function RightSide({ date }) {
   const { api_key } = useContext(ApiContext);
@@ -56,7 +57,7 @@ export default function RightSide({ date }) {
         }
       })
       .catch((e) => console.error(e));
-  }, [date]);
+  }, []);
 
   useMemo(() => {
     if (data.length !== 0) {
@@ -74,16 +75,17 @@ export default function RightSide({ date }) {
       </h2>
       <Arealegend />
       <div className="h-full w-full  mt-[30px] flex flex-col justify-around items-center">
-        {data.map((dat, key) => {
-          if (key < 5) {
+        {isLoading ? (
+          <Loader />
+        ) : (
+          data.slice(0, 5).map((dat, key) => {
             return (
               <div key={key} className="flex items-center">
                 <ListItem dat={dat} />
               </div>
             );
-          }
-          return null;
-        })}
+          })
+        )}
       </div>
     </div>
   );

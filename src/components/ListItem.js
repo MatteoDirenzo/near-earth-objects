@@ -1,10 +1,8 @@
 export default function ListItem({ dat }) {
   const maxMagnitude = 34;
-  console.log(dat[0]);
 
   function calculateMagnitude(magnitude) {
     const proportion = (magnitude * 100) / maxMagnitude;
-    console.log(proportion);
     return Math.round(Math.round(proportion)) + "%";
   }
 
