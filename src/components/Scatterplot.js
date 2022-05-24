@@ -36,38 +36,37 @@ function Scatterplot({ data, setData, svgRef, date, setIsLoading, ...rest }) {
           .select(svgRef.current)
           .attr("width", w)
           .attr("height", h)
-          .style("overflow", "visible")
-          .style("margin-left", 25);
+          .style("overflow", "visible");
         if (document.querySelectorAll("line").length === 0) {
           //4 lines
           svg
             .append("line")
-            .attr("x1", "0")
-            .attr("x2", "1020")
+            .attr("x1", "25")
+            .attr("x2", "1045")
             .attr("y1", "80")
             .attr("y2", "80")
             .attr("stroke-width", "0.5")
             .attr("stroke", "white");
           svg
             .append("line")
-            .attr("x1", "0")
-            .attr("x2", "1020")
+            .attr("x1", "25")
+            .attr("x2", "1045")
             .attr("y1", "220")
             .attr("y2", "220")
             .attr("stroke-width", "0.5")
             .attr("stroke", "white");
           svg
             .append("line")
-            .attr("x1", "0")
-            .attr("x2", "1020")
+            .attr("x1", "25")
+            .attr("x2", "1045")
             .attr("y1", "340")
             .attr("y2", "340")
             .attr("stroke-width", "0.5")
             .attr("stroke", "white");
           svg
             .append("line")
-            .attr("x1", "0")
-            .attr("x2", "1020")
+            .attr("x1", "25")
+            .attr("x2", "1045")
             .attr("y1", "460")
             .attr("y2", "460")
             .attr("stroke-width", "0.5")
@@ -75,7 +74,15 @@ function Scatterplot({ data, setData, svgRef, date, setIsLoading, ...rest }) {
           // distance arrow
           svg
             .append("line")
-            .attr("x1", "10")
+            .attr("x1", "30")
+            .attr("x2", "40")
+            .attr("y1", "425")
+            .attr("y2", "435")
+            .attr("stroke-width", "2")
+            .attr("stroke", "white");
+          svg
+            .append("line")
+            .attr("x1", "30.5")
             .attr("x2", "20")
             .attr("y1", "425")
             .attr("y2", "435")
@@ -83,16 +90,8 @@ function Scatterplot({ data, setData, svgRef, date, setIsLoading, ...rest }) {
             .attr("stroke", "white");
           svg
             .append("line")
-            .attr("x1", "10.5")
-            .attr("x2", "0")
-            .attr("y1", "425")
-            .attr("y2", "435")
-            .attr("stroke-width", "2")
-            .attr("stroke", "white");
-          svg
-            .append("line")
-            .attr("x1", "10")
-            .attr("x2", "10")
+            .attr("x1", "30")
+            .attr("x2", "30")
             .attr("y1", "427")
             .attr("y2", "447")
             .attr("stroke-width", "2")
@@ -100,24 +99,24 @@ function Scatterplot({ data, setData, svgRef, date, setIsLoading, ...rest }) {
           //velocity arrow
           svg
             .append("line")
-            .attr("x1", "30")
-            .attr("x2", "20")
+            .attr("x1", "50")
+            .attr("x2", "40")
             .attr("y1", "480")
             .attr("y2", "490")
             .attr("stroke-width", "2")
             .attr("stroke", "white");
           svg
             .append("line")
-            .attr("x1", "30")
-            .attr("x2", "20")
+            .attr("x1", "50")
+            .attr("x2", "40")
             .attr("y1", "481")
             .attr("y2", "470")
             .attr("stroke-width", "2")
             .attr("stroke", "white");
           svg
             .append("line")
-            .attr("x1", "30")
-            .attr("x2", "10")
+            .attr("x1", "50")
+            .attr("x2", "30")
             .attr("y1", "480")
             .attr("y2", "480")
             .attr("stroke-width", "2")
@@ -125,16 +124,16 @@ function Scatterplot({ data, setData, svgRef, date, setIsLoading, ...rest }) {
           //axis labels
           svg
             .append("text")
-            .attr("x", w / 2 - 470)
-            .attr("y", h + 40)
+            .attr("x", w / 2 - 490)
+            .attr("y", h - 80)
             .attr("font-family", "Avenir")
             .attr("font-weight", "300")
             .attr("fill", "white")
             .text("DISTANCE (au)");
           svg
             .append("text")
-            .attr("x", w / 2 - 455)
-            .attr("y", h + 85)
+            .attr("x", w / 2 - 480)
+            .attr("y", h - 40)
             .attr("font-family", "Avenir")
             .attr("font-weight", "300")
             .attr("fill", "white")
@@ -346,7 +345,7 @@ function Scatterplot({ data, setData, svgRef, date, setIsLoading, ...rest }) {
   }, [date]);
 
   return (
-    <div id="Scatterplot" className="w-[1000px] h-[400px] flex items-center">
+    <div id="Scatterplot" className="w-full h-full flex items-center">
       <svg ref={svgRef} {...rest}></svg>
     </div>
   );
